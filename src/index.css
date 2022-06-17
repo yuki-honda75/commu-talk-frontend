@@ -1,0 +1,28 @@
+.scroll {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+}
+
+#root {
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+.nav-link:hover {
+  background-color: cyan;
+}
+
+.top {
+  background-image: url("./img/23624526_m.jpg");
+  height: 100vh;
+  overflow: hidden !important;
+}
+
+.item,.talk {
+  background-color: #BFAE9F;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.5);
+}
+
