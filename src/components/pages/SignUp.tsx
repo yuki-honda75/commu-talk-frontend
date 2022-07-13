@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React from "react";
+import { ChangeEvent, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import {auth} from "../../firebase"
 
@@ -9,7 +10,7 @@ const SignUp = () => {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         if (email === "" || password == "") {
            return setError("入力は必須です");
@@ -26,10 +27,10 @@ const SignUp = () => {
         }
         history.push("/createprofile")
     };
-    const handleChangeEmail = (e) => {
+    const handleChangeEmail = (e: any) => {
         setEmail(e.currentTarget.value);
     };
-    const handleChangePassword = (e) => {
+    const handleChangePassword = (e: any) => {
         setPassword(e.currentTarget.value);
     };
 

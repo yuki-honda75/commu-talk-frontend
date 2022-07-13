@@ -1,10 +1,11 @@
+import React from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle } from "react-bootstrap";
 
 //プロフィール編集用のモーダル
-const EditProfile = (props) => {
+const EditProfile = (props: any) => {
     
     //チェックボックス以外の値変更
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         const item = props.profile.post;
         item[e.target.name] = e.target.value;
         props.setProfile({...props.profile,post: item})

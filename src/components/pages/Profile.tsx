@@ -1,28 +1,29 @@
+import React from "react";
 import { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
 import axios from "axios";
 import { auth } from "../../firebase";
 
-const Profile = (props) => {
+const Profile = (props: any) => {
     const history = useHistory();
     const [checkedItem, setCheckedItem] = useState({});
 
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         const item = props.profile.post;
         item[e.target.name] = e.target.value;
         props.setProfile({...props.profile,post: item})
     };
-    const handleChangeCheck = (e) => {
+    const handleChangeCheck = (e: any) => {
         setCheckedItem({
             ...checkedItem,
             [e.target.value]: e.target.checked
         });
     };
     const item = props.profile.post;
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
-        const dataPushArray = Object.entries(checkedItem).reduce((pre,[key, value])=>{
+        const dataPushArray = Object.entries(checkedItem).reduce((pre: any,[key, value])=>{
             value && pre.push(key)
             return pre
         },[]);
@@ -61,7 +62,7 @@ const Profile = (props) => {
                     <label className="form-label">趣味(複数選択可)</label>
                     <span></span><br></br>
                     {
-                        props.hobby.map((item) => {
+                        props.hobby.map((item: any) => {
                             return (
                                 <div key={item.hobbyId} className="form-check form-check-inline">
                                     <input className="form-check-input" id={item.hobbyId} type="checkbox" name="hobbyId" value={item.hobbyId} onChange={handleChangeCheck}/>

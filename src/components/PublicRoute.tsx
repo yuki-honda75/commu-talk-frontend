@@ -1,8 +1,9 @@
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 
-const PublicRoute = ({ component: Component, ...rest }) => {
-  const { user } = useAuthContext();
+const PublicRoute = ({ component: Component, ...rest }: any) => {
+  const { user }: any = useAuthContext();
   return (
     <Route
       {...rest}

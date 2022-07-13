@@ -1,15 +1,16 @@
+import React from "react";
 import { createContext, useState, useContext, useEffect } from "react";
 import { auth } from "../firebase";
 
-const AuthContext = createContext();
+const AuthContext = createContext({});
 
 export function useAuthContext() {
     return useContext(AuthContext);
 }
 
-export function AuthProvider({ children }) {
+export function AuthProvider({ children }: any) {
     const [user, setUser] = useState("");
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const value = {
         user,
@@ -17,7 +18,7 @@ export function AuthProvider({ children }) {
     };
     
     useEffect(() => {
-        const unsubscribed = auth.onAuthStateChanged((user) => {
+        const unsubscribed = auth.onAuthStateChanged((user: any) => {
             setUser(user);
             setLoading(false);
         });

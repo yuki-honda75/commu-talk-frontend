@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect,useState } from "react";
 import {BrowserRouter,Switch,Route,Link,NavLink, useHistory} from "react-router-dom";
 import axios from "axios";
@@ -5,7 +6,7 @@ import axios from "axios";
 import Hobby from "./Hobby";
 import Menu from "../menu/Menu";
 
-const Item = (props) => {
+const Item = (props: any) => {
     //コミュニティ一覧
     const [joined, setJoined] = useState([]);
     const [recommended, setRecommended] = useState([]);
@@ -41,7 +42,7 @@ const Item = (props) => {
                     {joined.length
                         ? <ul className="row row-cols-4 p-3">
                         { 
-                            joined.map((item) => {
+                            joined.map((item: any) => {
                                 return (
                                     <li className="p-2" key={item.comId}>
                                         <NavLink to={"/talk/" + item.comId + "/" + item.name} className="card card-body text-decoration-none bg-light">
@@ -63,7 +64,7 @@ const Item = (props) => {
                     {recommended.length
                         ? <div className="row row-cols-4 p-3">
                         {
-                            recommended.map((item) => {
+                            recommended.map((item: any) => {
                                 return (
                                     <div className="p-2" key={item.comId}>
                                         <NavLink to={"/talk/" + item.comId + "/" + item.name} className="card card-body text-decoration-none bg-light">

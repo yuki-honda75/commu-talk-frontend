@@ -1,14 +1,15 @@
+import React from "react";
 import { auth } from "../../firebase";
 import { Link, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const Login = (props) => {
+const Login = (props: any) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
             setLoading(true);
@@ -20,10 +21,10 @@ const Login = (props) => {
         }
         history.push("/");
     };
-    const handleChangeEmail = (e) => {
+    const handleChangeEmail = (e: any) => {
         setEmail(e.currentTarget.value);
     };
-    const handleChangePassword = (e) => {
+    const handleChangePassword = (e: any) => {
         setPassword(e.currentTarget.value);
     };
     if (loading) {
