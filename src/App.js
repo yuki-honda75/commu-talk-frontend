@@ -18,6 +18,7 @@ import { useAuthContext } from "./context/AuthContext";
 import PublicRoute from './components/PublicRoute';
 
 import { Modal, ModalBody } from 'react-bootstrap';
+import EditProfile from './components/modal/EditProfile';
 
 const App = () => {
   //ローディング
@@ -85,9 +86,12 @@ const App = () => {
     }).finally(() => {
     })
   };
-  // const openProfileModal = () => {
-  //   setProfileModal(true);
-  // };
+  const openProfileModal = () => {
+    setProfileModal(true);
+  };
+  const closeProfileModal = () => {
+    setProfileModal(false);
+  }
 
   //コミュニティ作成関連
   const [postCommunity, setPostCommunity] = useState({
@@ -261,7 +265,8 @@ const App = () => {
                   <Menu 
                     profile={profile} 
                     setProfile={setProfile} 
-                    openModalCommunity={openModalCommunity}/>
+                    openModalCommunity={openModalCommunity}
+                    openProfileModal={openProfileModal}/>
                 </div>
               </Route>
             </React.Fragment>
@@ -312,6 +317,15 @@ const App = () => {
             createCommunity={createCommunity} 
             message={message} 
             validation={validation}/>
+          {!user
+            ? <div></div>
+            : <EditProfile
+              profile={profile}
+              profileModal={profileModal}
+              closeProfileModal={closeProfileModal}
+            />
+          }
+
           <Modal show={messageModal} onHide={messageModal}>
             <ModalBody>作成しました！</ModalBody>
           </Modal>

@@ -56,6 +56,7 @@ const Menu = (props) => {
                         title={props.profile.get ? props.profile.get.name : userName}
                     >
                         <DropdownItem onClick={handleLogout}>ログアウト</DropdownItem>
+                        <DropdownItem onClick={props.openProfileModal}>プロフィール</DropdownItem>
                     </DropdownButton>
                 </div>
             </nav>
