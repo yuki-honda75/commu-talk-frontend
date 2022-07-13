@@ -12,7 +12,7 @@ const SignUp = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        if (email === "" || password == "") {
+        if (email === "" || password === "") {
            return setError("入力は必須です");
         } else if (password.length < 8 || password.length > 16) {
            return setError("パスワードは８文字以上、１６文字以内で入力してください")

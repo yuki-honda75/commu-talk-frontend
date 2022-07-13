@@ -1,17 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
-// import App from './App';
+import App from './App';
 // import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import { Button } from 'bootstrap';
 import { AuthProvider } from './context/AuthContext';
 
-ReactDOM.render(
-    <AuthProvider>
-    {/* //     <App /> */}
-    </AuthProvider>
-,document.getElementById('root'));
+const container: any = document.getElementById('root');
+const root = createRoot(container);
+root.render(
+  <AuthProvider>
+    <App />
+  </AuthProvider>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

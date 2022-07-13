@@ -7,7 +7,7 @@ import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import { useAuthContext } from '../../context/AuthContext';
 import { auth } from '../../firebase';
 
-import { Image } from 'src/img/facebook_cover_photo_1.png';
+import Image from '../../img/facebook_cover_photo_1.png';
 // import Search from './Search';
 
 const Menu = (props: any) => {

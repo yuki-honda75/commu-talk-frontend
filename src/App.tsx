@@ -20,7 +20,7 @@ import PublicRoute from './components/PublicRoute';
 import { Modal, ModalBody } from 'react-bootstrap';
 import EditProfile from './components/modal/EditProfile';
 
-const App = () => {
+const App: React.FC = () => {
   //ローディング
   const [loading, setLoading] = useState(true);
 
@@ -333,7 +333,7 @@ const App = () => {
           message={message}
           validation={validation}
         />
-        {!user ? (
+        {/* {!user ? (
           <div></div>
         ) : (
           <EditProfile
@@ -341,7 +341,7 @@ const App = () => {
             profileModal={profileModal}
             closeProfileModal={closeProfileModal}
           />
-        )}
+        )} */}
 
         <Modal show={messageModal} onHide={closeMessageModal}>
           <ModalBody>作成しました！</ModalBody>
