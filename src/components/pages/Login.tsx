@@ -3,7 +3,7 @@ import { auth } from '../../firebase';
 import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-const Login = (props: any) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +19,7 @@ const Login = (props: any) => {
     try {
       setLoading(true);
       await auth.signInWithEmailAndPassword(email, password);
-      history.push('/');
+      history.push('/createprofile');
     } catch (error) {
       console.log(error);
       setLoading(false);

@@ -22,11 +22,11 @@ import EditProfile from './components/modal/EditProfile';
 
 const App: React.FC = () => {
   //ローディング
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   //認証関連
   const { user }: any = useAuthContext();
-  let userId = '';
+  let userId: string = "";
   if (user !== null) {
     userId = user.uid;
   }
@@ -77,17 +77,16 @@ const App: React.FC = () => {
       hobbyId: [],
     },
   });
-  const getProfile = () => {
-    axios
+  const getProfile = async (userId: string) => {
+    await axios
       .get('/profileapi/get?userId=' + userId)
       .then((res) => {
         setProfile({ ...profile, get: res.data.profile });
         setLoading(false);
       })
-      .catch((e) => {
-        window.location.reload();
-      })
-      .finally(() => {});
+      .catch((e) => {})
+      .finally(() => {
+      });
   };
   const openProfileModal = () => {
     setProfileModal(true);
@@ -115,7 +114,7 @@ const App: React.FC = () => {
   const [messageModal, setMessageModal] = useState(false);
   const closeMessageModal = () => {
     setMessageModal(false);
-  }
+  };
   const createCommunity = (e: any) => {
     e.preventDefault();
     if (
@@ -154,7 +153,7 @@ const App: React.FC = () => {
         } else {
           setMessage({
             context: {
-              success: "",
+              success: '',
               fail: res.data.error,
             },
           });
@@ -246,10 +245,10 @@ const App: React.FC = () => {
   //マウント時の実行
   useEffect(() => {
     getHobby();
-    getProfile();
+    getProfile(userId);
   }, []);
 
-  //ロード中画面
+  // ロード中画面
   if (loading) {
     return <p>loading...</p>;
   }
@@ -265,6 +264,7 @@ const App: React.FC = () => {
               <Profile
                 profile={profile}
                 setProfile={setProfile}
+                  getProfile={(userId: string) => getProfile(userId)}
                 hobby={hobby}
               />
             </PublicRoute>
@@ -333,15 +333,12 @@ const App: React.FC = () => {
           message={message}
           validation={validation}
         />
-        {/* {!user ? (
-          <div></div>
-        ) : (
-          <EditProfile
-            profile={profile}
-            profileModal={profileModal}
-            closeProfileModal={closeProfileModal}
-          />
-        )} */}
+
+        <EditProfile
+          profile={profile}
+          profileModal={profileModal}
+          closeProfileModal={closeProfileModal}
+        />
 
         <Modal show={messageModal} onHide={closeMessageModal}>
           <ModalBody>作成しました！</ModalBody>

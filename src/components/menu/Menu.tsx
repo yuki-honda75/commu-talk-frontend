@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 
 import { DropdownButton } from 'react-bootstrap';
@@ -24,11 +24,11 @@ const Menu = (props: any) => {
     history.push('/login');
   };
 
+  
+
   //ユーザー情報がなければログイン画面、プロフィールがなければ作成画面へ
   if (!user) {
     return <Redirect to="/login" />;
-  } else if (props.profile == null) {
-    return <Redirect to="/createprofile" />;
   } else {
     return (
       <nav
