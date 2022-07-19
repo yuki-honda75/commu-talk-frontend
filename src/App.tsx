@@ -338,6 +338,7 @@ const App: React.FC = () => {
           profile={profile}
           profileModal={profileModal}
           closeProfileModal={closeProfileModal}
+          hobby={hobby}
         />
 
         <Modal show={messageModal} onHide={closeMessageModal}>

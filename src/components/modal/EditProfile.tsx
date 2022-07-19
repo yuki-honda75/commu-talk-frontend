@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Modal,
@@ -8,19 +8,39 @@ import {
   ModalTitle,
 } from 'react-bootstrap';
 
+type HobbyType = {
+  hobbyId: number,
+  name: string,
+}
 //プロフィール編集用のモーダル
 const EditProfile = (props: any) => {
+  const firstCheckedItem = props.profile.get.hobbyId.reduce(
+    (obj: {}, data: number) => ({
+      ...obj,
+      [data]: true,
+    }),
+    {}
+  );
+  const [checkedItem, setCheckedItem] = useState<any>(firstCheckedItem);
+
   //チェックボックス以外の値変更
   const handleChange = (e: any) => {
     const item = props.profile.post;
     item[e.target.name] = e.target.value;
     props.setProfile({ ...props.profile, post: item });
   };
+  //チェックボックスの値変更
+  const handleChangeCheck = (e: any) => {
+    setCheckedItem({
+      ...checkedItem,
+      [e.target.value]: e.target.checked,
+    });
+    console.log(checkedItem);
+  };
 
   const item = props.profile.post;
-  console.log(props.profile.get);
-  if(props.profile.get === null) {
-      return <></>
+  if (props.profile.get === null) {
+    return <></>;
   }
 
   return (
@@ -58,30 +78,36 @@ const EditProfile = (props: any) => {
             <label className="form-label">趣味(複数選択可)</label>
             <span></span>
             <br></br>
-            {/* {
-                            props.hobby.map((item) => {
-                                return (
-                                    <div key={item.hobbyId} className="form-check form-check-inline">
-                                        <input className="form-check-input" id={item.hobbyId} type="checkbox" name="hobbyId" value={item.hobbyId} onChange={handleChangeCheck}
-                                        />
-                                        <label className="form-check-label" htmlFor={item.hobbyId}>{item.name}</label>
-                                    </div>
-                                );
-                            })
-                        } */}
+            {props.hobby.map((item: HobbyType) => {
+              return (
+                <div
+                  key={item.hobbyId}
+                  className="form-check form-check-inline"
+                >
+                  <input
+                    className="form-check-input"
+                    id={"id" + item.hobbyId}
+                    type="checkbox"
+                    name="hobbyId"
+                    defaultValue={item.hobbyId}
+                    onChange={handleChangeCheck}
+                    checked={checkedItem[item.hobbyId] && true}
+                  />
+                  <label className="form-check-label" htmlFor={"id" + item.hobbyId}>
+                    {item.name}
+                  </label>
+                </div>
+              );
+            })}
             <br></br>
-            <button
-              // disabled={!item.name || !item.profession || !Object.values(checkedItem).includes(true)}
+          </ModalBody>
+          <ModalFooter>
+            <Button // disabled={!item.name || !item.profession || !Object.values(checkedItem).includes(true)}
               className="btn btn-primary"
               type="submit"
               // onClick={handleSubmit}
             >
-              作成
-            </button>
-          </ModalBody>
-          <ModalFooter>
-            <Button type="submit" onClick={props.createCommunity}>
-              作成
+              更新
             </Button>
           </ModalFooter>
         </form>
