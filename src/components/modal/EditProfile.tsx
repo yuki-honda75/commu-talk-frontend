@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
   Button,
@@ -7,11 +8,13 @@ import {
   ModalHeader,
   ModalTitle,
 } from 'react-bootstrap';
+import { Redirect, useHistory } from 'react-router-dom';
+import { useAuthContext } from '../../context/AuthContext';
 
 type HobbyType = {
-  hobbyId: number,
-  name: string,
-}
+  hobbyId: number;
+  name: string;
+};
 //プロフィール編集用のモーダル
 const EditProfile = (props: any) => {
   const firstCheckedItem = props.profile.get.hobbyId.reduce(
@@ -22,12 +25,17 @@ const EditProfile = (props: any) => {
     {}
   );
   const [checkedItem, setCheckedItem] = useState<any>(firstCheckedItem);
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const { user }: any = useAuthContext();
+  const userId = user.uid;
+  const profileByGet = props.profile.get;
+  const profileForPost = props.profile.post;
 
   //チェックボックス以外の値変更
   const handleChange = (e: any) => {
-    const item = props.profile.post;
-    item[e.target.name] = e.target.value;
-    props.setProfile({ ...props.profile, post: item });
+    profileForPost[e.target.name] = e.target.value;
+    props.setProfile({ ...props.profile, post: profileForPost });
+    setDisabled(false);
   };
   //チェックボックスの値変更
   const handleChangeCheck = (e: any) => {
@@ -35,10 +43,38 @@ const EditProfile = (props: any) => {
       ...checkedItem,
       [e.target.value]: e.target.checked,
     });
-    console.log(checkedItem);
+    setDisabled(false);
   };
 
-  const item = props.profile.post;
+  //更新ボタン
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    const dataPushArray = Object.entries(checkedItem).reduce(
+      (pre: any, [key, value]) => {
+        value && pre.push(key);
+        return pre;
+      },
+      []
+    );
+    profileForPost.hobbyId = dataPushArray;
+    profileForPost.profileId = props.profile.get.profileId;
+    props.setProfile({ ...props.profile, post: profileForPost });
+    axios
+      .post('/profileapi/update', props.profile.post)
+      .then((res: any) => {
+        alert('更新しました');
+        window.location.reload();
+      })
+      .catch(() => {
+        alert('失敗しました');
+      })
+      .finally(() => {});
+  };
+
+  useEffect(() => {
+    props.setProfile({ ...props.profile, post: profileByGet });
+  }, []);
+
   if (props.profile.get === null) {
     return <></>;
   }
@@ -86,14 +122,17 @@ const EditProfile = (props: any) => {
                 >
                   <input
                     className="form-check-input"
-                    id={"id" + item.hobbyId}
+                    id={'id' + item.hobbyId}
                     type="checkbox"
                     name="hobbyId"
                     defaultValue={item.hobbyId}
                     onChange={handleChangeCheck}
                     checked={checkedItem[item.hobbyId] && true}
                   />
-                  <label className="form-check-label" htmlFor={"id" + item.hobbyId}>
+                  <label
+                    className="form-check-label"
+                    htmlFor={'id' + item.hobbyId}
+                  >
                     {item.name}
                   </label>
                 </div>
@@ -102,10 +141,11 @@ const EditProfile = (props: any) => {
             <br></br>
           </ModalBody>
           <ModalFooter>
-            <Button // disabled={!item.name || !item.profession || !Object.values(checkedItem).includes(true)}
+            <Button
+              disabled={disabled}
               className="btn btn-primary"
               type="submit"
-              // onClick={handleSubmit}
+              onClick={handleSubmit}
             >
               更新
             </Button>

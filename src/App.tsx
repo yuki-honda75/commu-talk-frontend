@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   //認証関連
   const { user }: any = useAuthContext();
-  let userId: string = "";
+  let userId: string = '';
   if (user !== null) {
     userId = user.uid;
   }
@@ -75,6 +75,7 @@ const App: React.FC = () => {
       profession: '',
       iconImg: '001.png',
       hobbyId: [],
+      profileId: '',
     },
   });
   const getProfile = async (userId: string) => {
@@ -85,8 +86,7 @@ const App: React.FC = () => {
         setLoading(false);
       })
       .catch((e) => {})
-      .finally(() => {
-      });
+      .finally(() => {});
   };
   const openProfileModal = () => {
     setProfileModal(true);
@@ -264,7 +264,7 @@ const App: React.FC = () => {
               <Profile
                 profile={profile}
                 setProfile={setProfile}
-                  getProfile={(userId: string) => getProfile(userId)}
+                getProfile={(userId: string) => getProfile(userId)}
                 hobby={hobby}
               />
             </PublicRoute>
@@ -336,6 +336,7 @@ const App: React.FC = () => {
 
         <EditProfile
           profile={profile}
+          setProfile={setProfile}
           profileModal={profileModal}
           closeProfileModal={closeProfileModal}
           hobby={hobby}
